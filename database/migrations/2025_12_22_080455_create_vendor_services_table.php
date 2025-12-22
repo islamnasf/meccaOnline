@@ -13,6 +13,17 @@ return new class extends Migration
     {
         Schema::create('vendor_services', function (Blueprint $table) {
             $table->id();
+             $table->string('name')->nullable();
+            $table->string('image')->nullable();
+            $table->string('description')->nullable();
+            $table->string('logo')->nullable();
+           
+
+            $table->unsignedBigInteger('vendor_id');
+            $table->foreign('vendor_id')
+                ->references('id')->on('vendors')
+                ->onDelete('cascade'); // هذا سيحذف كل التفاصيل تلقائيًا عند حذف النوع
+
             $table->timestamps();
         });
     }

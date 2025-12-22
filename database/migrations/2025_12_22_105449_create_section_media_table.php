@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('vendor_slides', function (Blueprint $table) {
+        Schema::create('section_media', function (Blueprint $table) {
             $table->id();
-             $table->string('name')->nullable();
-            $table->string('image')->nullable();
-            $table->string('description')->nullable();
-             $table->unsignedBigInteger('vendor_id');
-            $table->foreign('vendor_id')
-                ->references('id')->on('vendors')
+             $table->string('file')->nullable();
+             $table->unsignedBigInteger('section_id');
+            $table->foreign('section_id')
+                ->references('id')->on('sections')
                 ->onDelete('cascade'); // هذا سيحذف كل التفاصيل تلقائيًا عند حذف النوع
 
             $table->timestamps();
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('vendor_slides');
+        Schema::dropIfExists('section_media');
     }
 };
