@@ -21,7 +21,9 @@ return new class extends Migration {
             $table->string('email')->nullable();
             $table->string('address')->nullable();
             $table->string('location')->nullable();
-
+            $table->string('color1')->nullable();
+            $table->string('color2')->nullable();
+            $table->string('color3')->nullable();
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')
                 ->references('id')->on('categories')
