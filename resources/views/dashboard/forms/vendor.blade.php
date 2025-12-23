@@ -184,10 +184,12 @@
         }
         
         /* Service-Section Connection */
-        .section-service-select {
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid #eee;
+        .service-sections-container {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border: 1px dashed #dee2e6;
         }
         
         .service-indicator {
@@ -347,6 +349,88 @@
         
         .uploading {
             opacity: 0.7;
+        }
+        
+        /* Slide Hero Section */
+        .slide-hero-section {
+            background: linear-gradient(135deg, #f5f7fb 0%, #e4edf5 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 2px solid #dee2e6;
+        }
+        
+        .hero-slide-preview {
+            border: 2px dashed #dee2e6;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            background-color: white;
+            margin-top: 15px;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        
+        .hero-slide-preview img {
+            max-width: 100%;
+            max-height: 150px;
+            border-radius: 8px;
+        }
+        
+        /* Nested sections styling */
+        .nested-section {
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            background-color: white;
+            position: relative;
+        }
+        
+        .nested-section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .section-nested-indicator {
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary-color);
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+        
+        /* Toggle for nested sections */
+        .sections-toggle {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 10px 15px;
+            margin-top: 10px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sections-toggle:hover {
+            background-color: #e9ecef;
+        }
+        
+        .sections-content {
+            display: none;
+            margin-top: 15px;
+        }
+        
+        .sections-content.show {
+            display: block;
         }
         
         @media (max-width: 768px) {
@@ -519,7 +603,24 @@
                     </div>
                 </div>
                 
-                <!-- Vendor Services (Dynamic) -->
+                <!-- Vendor Slides (Hero Slides) -->
+                <div class="slide-hero-section mt-5">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <h3 class="section-title mb-0">شرائح الهيدر (Hero Slides) <span class="counter-badge" id="slidesCount">0</span></h3>
+                            <small class="text-warning"><i class="fas fa-exclamation-circle me-1"></i>شرائح العرض الرئيسية التي تظهر في الهيدر</small>
+                        </div>
+                        <button type="button" class="btn btn-primary" id="addSlideBtn">
+                            <i class="fas fa-plus me-2"></i>إضافة شريحة
+                        </button>
+                    </div>
+                    
+                    <div id="slidesContainer">
+                        <!-- Dynamic slides will be added here -->
+                    </div>
+                </div>
+                
+                <!-- Vendor Services with Nested Sections -->
                 <div class="d-flex justify-content-between align-items-center mt-5 mb-3">
                     <h3 class="section-title mb-0">خدمات البائع <span class="counter-badge" id="servicesCount">0</span></h3>
                     <button type="button" class="btn btn-primary" id="addServiceBtn">
@@ -528,34 +629,7 @@
                 </div>
                 
                 <div id="servicesContainer">
-                    <!-- Dynamic services will be added here -->
-                </div>
-                
-                <!-- Vendor Slides (Dynamic) - Required Section -->
-                <div class="d-flex justify-content-between align-items-center mt-5 mb-3">
-                    <div>
-                        <h3 class="section-title mb-0">شرائح العرض <span class="counter-badge" id="slidesCount">0</span></h3>
-                        <small class="text-warning"><i class="fas fa-exclamation-circle me-1"></i>يجب إضافة شريحة عرض واحدة على الأقل</small>
-                    </div>
-                    <button type="button" class="btn btn-primary" id="addSlideBtn">
-                        <i class="fas fa-plus me-2"></i>إضافة شريحة
-                    </button>
-                </div>
-                
-                <div id="slidesContainer">
-                    <!-- Dynamic slides will be added here -->
-                </div>
-                
-                <!-- Vendor Sections (Dynamic with Service Selection) -->
-                <div class="d-flex justify-content-between align-items-center mt-5 mb-3">
-                    <h3 class="section-title mb-0">الأقسام <span class="counter-badge" id="sectionsCount">0</span></h3>
-                    <button type="button" class="btn btn-primary" id="addSectionBtn">
-                        <i class="fas fa-plus me-2"></i>إضافة قسم
-                    </button>
-                </div>
-                
-                <div id="sectionsContainer">
-                    <!-- Dynamic sections will be added here -->
+                    <!-- Dynamic services with nested sections will be added here -->
                 </div>
                 
                 <!-- Submit Button -->
@@ -609,6 +683,32 @@
                         <small class="text-muted mt-2">معاينة الشعار ستظهر هنا</small>
                     </div>
                 </div>
+                
+                <!-- Nested Sections for this Service -->
+                <div class="col-md-12">
+                    <div class="sections-toggle" onclick="toggleSections(this)">
+                        <span>
+                            <i class="fas fa-th-large me-2"></i>أقسام هذه الخدمة
+                            <span class="section-nested-indicator ms-2">عدد الأقسام: <span class="service-sections-count">0</span></span>
+                        </span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    
+                    <div class="sections-content">
+                        <div class="service-sections-container">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h6 class="text-secondary mb-0"><i class="fas fa-th-large me-2"></i>أقسام الخدمة</h6>
+                                <button type="button" class="btn btn-sm btn-outline-primary add-section-btn">
+                                    <i class="fas fa-plus me-1"></i>إضافة قسم
+                                </button>
+                            </div>
+                            
+                            <div class="service-sections-list">
+                                <!-- Nested sections will be added here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </template>
@@ -616,7 +716,7 @@
     <template id="slideTemplate">
         <div class="dynamic-section slide-item">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <h5 class="text-primary mb-0"><i class="fas fa-sliders-h me-2"></i>شريحة العرض</h5>
+                <h5 class="text-primary mb-0"><i class="fas fa-sliders-h me-2"></i>شريحة الهيدر</h5>
                 <button type="button" class="btn btn-sm btn-remove remove-slide">
                     <i class="fas fa-trash me-1"></i>حذف
                 </button>
@@ -630,10 +730,10 @@
                 
                 <div class="col-md-6">
                     <label class="form-label">صورة الشريحة</label>
-                    <input type="file" class="form-control slide-image" accept="image/*" onchange="previewSingleFile(this, this.closest('.slide-item').querySelector('.slide-image-preview'))">
-                    <div class="file-preview mt-2 slide-image-preview">
-                        <i class="fas fa-image fa-2x text-muted"></i>
-                        <small class="text-muted mt-2">معاينة الصورة ستظهر هنا</small>
+                    <input type="file" class="form-control slide-image" accept="image/*" onchange="previewHeroSlide(this, this.closest('.slide-item').querySelector('.slide-image-preview'))">
+                    <div class="hero-slide-preview mt-2 slide-image-preview">
+                        <i class="fas fa-image fa-3x text-muted"></i>
+                        <small class="text-muted mt-2">معاينة صورة شريحة الهيدر ستظهر هنا</small>
                     </div>
                 </div>
                 
@@ -649,63 +749,53 @@
     </template>
     
     <template id="sectionTemplate">
-        <div class="dynamic-section section-item">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h5 class="text-primary mb-0"><i class="fas fa-th-large me-2"></i>قسم جديد</h5>
-                <button type="button" class="btn btn-sm btn-remove remove-section">
-                    <i class="fas fa-trash me-1"></i>حذف
+        <div class="nested-section section-item" data-section-id="">
+            <div class="nested-section-header">
+                <h6 class="mb-0"><i class="fas fa-th me-2"></i>قسم جديد <span class="section-nested-indicator">#<span class="section-id-display"></span></span></h6>
+                <button type="button" class="btn btn-sm btn-danger remove-section">
+                    <i class="fas fa-times"></i>
                 </button>
             </div>
             
-            <div class="row g-4">
+            <div class="row g-3">
                 <div class="col-md-6">
-                    <label class="form-label">اسم القسم</label>
-                    <input type="text" class="form-control section-name" placeholder="أدخل اسم القسم" required>
+                    <label class="form-label small">اسم القسم</label>
+                    <input type="text" class="form-control form-control-sm section-name" placeholder="أدخل اسم القسم" required>
                 </div>
                 
                 <div class="col-md-6">
-                    <label class="form-label">صورة القسم</label>
-                    <input type="file" class="form-control section-image" accept="image/*" onchange="previewSingleFile(this, this.closest('.section-item').querySelector('.section-image-preview'))">
+                    <label class="form-label small">صورة القسم</label>
+                    <input type="file" class="form-control form-control-sm section-image" accept="image/*" onchange="previewSingleFile(this, this.closest('.section-item').querySelector('.section-image-preview'))">
                     <div class="file-preview mt-2 section-image-preview">
-                        <i class="fas fa-image fa-2x text-muted"></i>
-                        <small class="text-muted mt-2">معاينة الصورة ستظهر هنا</small>
+                        <i class="fas fa-image fa-lg text-muted"></i>
+                        <small class="text-muted mt-2">معاينة الصورة</small>
                     </div>
                 </div>
                 
                 <div class="col-md-12">
-                    <label class="form-label">وصف القسم</label>
+                    <label class="form-label small">وصف القسم</label>
                     <div class="editor-container">
                         <div class="section-description-editor"></div>
                         <input type="hidden" class="section-description">
                     </div>
                 </div>
                 
-                <!-- Service Selection for Section -->
-                <div class="col-md-12 section-service-select">
-                    <label class="form-label">ارتباط القسم بالخدمة</label>
-                    <select class="form-select section-service-id" required>
-                        <option selected disabled value="">اختر الخدمة المرتبطة بهذا القسم</option>
-                        <!-- Options will be populated dynamically -->
-                    </select>
-                    <small class="text-muted">يجب اختيار خدمة لربط القسم بها (مطلوب)</small>
-                </div>
-                
                 <!-- Section Media (Multi-file Upload) -->
                 <div class="col-md-12">
                     <div class="d-flex justify-content-between align-items-center mt-3 mb-3">
-                        <h6 class="text-secondary mb-0"><i class="fas fa-photo-video me-2"></i>وسائط القسم</h6>
+                        <h6 class="text-secondary mb-0 small"><i class="fas fa-photo-video me-2"></i>وسائط القسم</h6>
                         <small class="text-muted">(يمكنك رفع أكثر من ملف في نفس الوقت)</small>
                     </div>
                     
                     <!-- Multi-file Upload Area -->
-                    <div class="multi-file-upload" id="multiUpload-{id}">
+                    <div class="multi-file-upload">
                         <div class="upload-icon mb-3">
-                            <i class="fas fa-cloud-upload-alt fa-3x text-primary"></i>
+                            <i class="fas fa-cloud-upload-alt fa-2x text-primary"></i>
                         </div>
-                        <h5>اسحب وأفلت الملفات هنا</h5>
-                        <p class="text-muted">أو انقر لاختيار الملفات</p>
+                        <h6>اسحب وأفلت الملفات هنا</h6>
+                        <p class="text-muted small">أو انقر لاختيار الملفات</p>
                         <input type="file" class="d-none section-media-files" multiple accept="image/*,video/*,audio/*,.pdf,.doc,.docx,.xlsx,.pptx">
-                        <button type="button" class="btn btn-outline-primary mt-3 browse-files-btn">
+                        <button type="button" class="btn btn-sm btn-outline-primary mt-2 browse-files-btn">
                             <i class="fas fa-folder-open me-2"></i>تصفح الملفات
                         </button>
                     </div>
@@ -731,7 +821,6 @@
         let serviceCount = 0;
         let slideCount = 0;
         let sectionCount = 0;
-        let servicesList = []; // Store services for dropdown
         
         // Store all Quill editor instances
         let quillEditors = [];
@@ -739,7 +828,6 @@
         // DOM elements
         const servicesContainer = document.getElementById('servicesContainer');
         const slidesContainer = document.getElementById('slidesContainer');
-        const sectionsContainer = document.getElementById('sectionsContainer');
         
         // Template elements
         const serviceTemplate = document.getElementById('serviceTemplate');
@@ -827,6 +915,16 @@
             document.getElementById('color3Preview').style.backgroundColor = this.value;
         });
         
+        // Toggle nested sections visibility
+        function toggleSections(element) {
+            const content = element.nextElementSibling;
+            const icon = element.querySelector('.fa-chevron-down');
+            
+            content.classList.toggle('show');
+            icon.classList.toggle('fa-chevron-down');
+            icon.classList.toggle('fa-chevron-up');
+        }
+        
         // Initialize Quill editor
         function initQuillEditor(editorElement, hiddenInput) {
             const quill = new Quill(editorElement, {
@@ -877,6 +975,24 @@
                             <small class="text-muted d-block">${formatFileSize(file.size)}</small>
                         `;
                     }
+                };
+                
+                reader.readAsDataURL(file);
+            }
+        }
+        
+        // Special preview for hero slides
+        function previewHeroSlide(input, previewContainer) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    previewContainer.innerHTML = `
+                        <img src="${e.target.result}" alt="شريحة الهيدر">
+                        <small class="mt-2">${file.name}</small>
+                        <small class="text-muted d-block">${formatFileSize(file.size)}</small>
+                    `;
                 };
                 
                 reader.readAsDataURL(file);
@@ -1086,7 +1202,7 @@
             return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
         }
         
-        // Add Service
+        // Add Service with nested sections
         document.getElementById('addServiceBtn').addEventListener('click', function() {
             addService();
         });
@@ -1102,12 +1218,6 @@
             // Update service ID display
             serviceElement.querySelector('.service-id-display').textContent = serviceId;
             
-            // Store service info for dropdowns
-            servicesList.push({
-                id: serviceId,
-                name: ''
-            });
-            
             updateCounter('servicesCount', serviceCount);
             
             // Initialize Quill editor for service description
@@ -1116,55 +1226,81 @@
             const quill = initQuillEditor(editorElement, hiddenInput);
             quillEditors.push(quill);
             
-            // Add remove event listener
+            // Add remove event listener for service
             const removeBtn = serviceElement.querySelector('.remove-service');
             removeBtn.addEventListener('click', function() {
-                // Remove service from list
-                const idToRemove = parseInt(this.closest('.service-item').dataset.serviceId);
-                servicesList = servicesList.filter(s => s.id !== idToRemove);
-                
-                // Remove service from all dropdowns
-                document.querySelectorAll('.section-service-id').forEach(select => {
-                    for (let i = select.options.length - 1; i >= 0; i--) {
-                        if (select.options[i].value == idToRemove) {
-                            select.remove(i);
-                            break;
-                        }
-                    }
-                });
-                
                 this.closest('.service-item').remove();
                 serviceCount--;
                 updateCounter('servicesCount', serviceCount);
             });
             
-            // Update service name in list when changed
-            const nameInput = serviceElement.querySelector('.service-name');
-            nameInput.addEventListener('input', function() {
-                const serviceId = parseInt(this.closest('.service-item').dataset.serviceId);
-                const service = servicesList.find(s => s.id === serviceId);
-                if (service) {
-                    service.name = this.value;
-                    
-                    // Update all dropdowns with this service
-                    document.querySelectorAll('.section-service-id').forEach(select => {
-                        for (let i = 0; i < select.options.length; i++) {
-                            if (select.options[i].value == serviceId) {
-                                select.options[i].text = `خدمة #${serviceId}: ${this.value || 'بدون اسم'}`;
-                                break;
-                            }
-                        }
-                    });
-                }
+            // Add section button event listener
+            const addSectionBtn = serviceElement.querySelector('.add-section-btn');
+            const sectionsList = serviceElement.querySelector('.service-sections-list');
+            let serviceSectionCount = 0;
+            
+            addSectionBtn.addEventListener('click', function() {
+                addNestedSection(sectionsList, serviceId);
+                serviceSectionCount++;
+                updateServiceSectionsCount(serviceElement, serviceSectionCount);
             });
             
             servicesContainer.appendChild(serviceElement);
-            
-            // Update all existing section dropdowns
-            updateAllSectionDropdowns();
         }
         
-        // Add Slide (Required - at least one)
+        // Add nested section to a service
+        function addNestedSection(container, serviceId) {
+            const sectionClone = sectionTemplate.content.cloneNode(true);
+            sectionCount++;
+            const sectionId = sectionCount;
+            
+            const sectionElement = sectionClone.querySelector('.section-item');
+            sectionElement.dataset.sectionId = sectionId;
+            sectionElement.dataset.serviceId = serviceId;
+            
+            // Update section ID display
+            sectionElement.querySelector('.section-id-display').textContent = sectionId;
+            
+            // Initialize Quill editor for section description
+            const editorElement = sectionElement.querySelector('.section-description-editor');
+            const hiddenInput = sectionElement.querySelector('.section-description');
+            const quill = initQuillEditor(editorElement, hiddenInput);
+            quillEditors.push(quill);
+            
+            // Initialize multi-file upload for this section
+            const uploadArea = sectionElement.querySelector('.multi-file-upload');
+            const fileListContainer = sectionElement.querySelector('.file-list');
+            const fileUploadManager = initMultiFileUpload(uploadArea, fileListContainer);
+            
+            // Add remove event listener for section
+            const removeBtn = sectionElement.querySelector('.remove-section');
+            removeBtn.addEventListener('click', function() {
+                this.closest('.section-item').remove();
+                sectionCount--;
+                
+                // Update parent service sections count
+                const serviceElement = this.closest('.service-item');
+                if (serviceElement) {
+                    const sectionsCount = serviceElement.querySelectorAll('.section-item').length;
+                    updateServiceSectionsCount(serviceElement, sectionsCount);
+                }
+            });
+            
+            // Store file upload manager reference
+            sectionElement.fileUploadManager = fileUploadManager;
+            
+            container.appendChild(sectionElement);
+        }
+        
+        // Update service sections count display
+        function updateServiceSectionsCount(serviceElement, count) {
+            const countElement = serviceElement.querySelector('.service-sections-count');
+            if (countElement) {
+                countElement.textContent = count;
+            }
+        }
+        
+        // Add Slide (Hero Slides)
         document.getElementById('addSlideBtn').addEventListener('click', function() {
             addSlide();
         });
@@ -1186,7 +1322,7 @@
             const removeBtn = slideElement.querySelector('.remove-slide');
             removeBtn.addEventListener('click', function() {
                 if (slideCount <= 1) {
-                    alert('يجب أن يكون هناك شريحة واحدة على الأقل');
+                    alert('يجب أن يكون هناك شريحة هيدر واحدة على الأقل');
                     return;
                 }
                 
@@ -1196,77 +1332,6 @@
             });
             
             slidesContainer.appendChild(slideElement);
-        }
-        
-        // Add Section with Service Selection
-        document.getElementById('addSectionBtn').addEventListener('click', function() {
-            if (serviceCount === 0) {
-                alert('يجب إضافة خدمة واحدة على الأقل قبل إضافة قسم');
-                return;
-            }
-            addSection();
-        });
-        
-        function addSection() {
-            const sectionClone = sectionTemplate.content.cloneNode(true);
-            sectionCount++;
-            updateCounter('sectionsCount', sectionCount);
-            
-            const sectionElement = sectionClone.querySelector('.section-item');
-            
-            // Initialize Quill editor for section description
-            const editorElement = sectionElement.querySelector('.section-description-editor');
-            const hiddenInput = sectionElement.querySelector('.section-description');
-            const quill = initQuillEditor(editorElement, hiddenInput);
-            quillEditors.push(quill);
-            
-            // Initialize multi-file upload for this section
-            const uploadArea = sectionElement.querySelector('.multi-file-upload');
-            const fileListContainer = sectionElement.querySelector('.file-list');
-            const uploadId = 'upload-' + Date.now();
-            uploadArea.id = uploadId;
-            
-            const fileUploadManager = initMultiFileUpload(uploadArea, fileListContainer);
-            
-            // Add remove event listener for section
-            const removeBtn = sectionElement.querySelector('.remove-section');
-            removeBtn.addEventListener('click', function() {
-                this.closest('.section-item').remove();
-                sectionCount--;
-                updateCounter('sectionsCount', sectionCount);
-            });
-            
-            // Populate service dropdown
-            const serviceSelect = sectionElement.querySelector('.section-service-id');
-            updateServiceDropdown(serviceSelect);
-            
-            sectionsContainer.appendChild(sectionElement);
-            
-            // Store file upload manager reference
-            sectionElement.fileUploadManager = fileUploadManager;
-        }
-        
-        // Update a single service dropdown
-        function updateServiceDropdown(selectElement) {
-            // Clear existing options except first
-            while (selectElement.options.length > 1) {
-                selectElement.remove(1);
-            }
-            
-            // Add services to dropdown
-            servicesList.forEach(service => {
-                const option = document.createElement('option');
-                option.value = service.id;
-                option.textContent = `خدمة #${service.id}: ${service.name || 'بدون اسم'}`;
-                selectElement.appendChild(option);
-            });
-        }
-        
-        // Update all section dropdowns
-        function updateAllSectionDropdowns() {
-            document.querySelectorAll('.section-service-id').forEach(select => {
-                updateServiceDropdown(select);
-            });
         }
         
         // Update counter display
@@ -1288,9 +1353,9 @@
                 return;
             }
             
-            // Validate at least one slide
+            // Validate at least one hero slide
             if (slideCount === 0) {
-                alert('يجب إضافة شريحة عرض واحدة على الأقل');
+                alert('يجب إضافة شريحة هيدر واحدة على الأقل');
                 return;
             }
             
@@ -1303,21 +1368,7 @@
             });
             
             if (!slideValid) {
-                alert('يجب إدخال اسم لكل شريحة عرض');
-                return;
-            }
-            
-            // Validate all sections have service selected
-            let sectionValid = true;
-            document.querySelectorAll('.section-item').forEach(item => {
-                const serviceSelect = item.querySelector('.section-service-id');
-                if (!serviceSelect.value) {
-                    sectionValid = false;
-                }
-            });
-            
-            if (sectionCount > 0 && !sectionValid) {
-                alert('يجب اختيار خدمة لكل قسم من الأقسام');
+                alert('يجب إدخال اسم لكل شريحة هيدر');
                 return;
             }
             
@@ -1337,14 +1388,44 @@
                 color3: document.getElementById('color3').value
             };
             
-            // Collect services data
+            // Collect services data with nested sections
             const services = [];
-            document.querySelectorAll('.service-item').forEach(item => {
-                services.push({
-                    id: parseInt(item.dataset.serviceId),
-                    name: item.querySelector('.service-name').value,
-                    description: item.querySelector('.service-description').value
+            document.querySelectorAll('.service-item').forEach(serviceItem => {
+                const serviceId = parseInt(serviceItem.dataset.serviceId);
+                const service = {
+                    id: serviceId,
+                    name: serviceItem.querySelector('.service-name').value,
+                    description: serviceItem.querySelector('.service-description').value,
+                    sections: []
+                };
+                
+                // Collect sections for this service
+                serviceItem.querySelectorAll('.section-item').forEach(sectionItem => {
+                    const sectionServiceId = parseInt(sectionItem.dataset.serviceId);
+                    if (sectionServiceId === serviceId) {
+                        const section = {
+                            name: sectionItem.querySelector('.section-name').value,
+                            description: sectionItem.querySelector('.section-description').value,
+                            media: []
+                        };
+                        
+                        // Collect media files for this section
+                        if (sectionItem.fileUploadManager) {
+                            const files = sectionItem.fileUploadManager.getFiles();
+                            files.forEach(file => {
+                                section.media.push({
+                                    name: file.name,
+                                    type: file.type,
+                                    size: file.size
+                                });
+                            });
+                        }
+                        
+                        service.sections.push(section);
+                    }
                 });
+                
+                services.push(service);
             });
             
             // Collect slides data
@@ -1356,37 +1437,11 @@
                 });
             });
             
-            // Collect sections data
-            const sections = [];
-            document.querySelectorAll('.section-item').forEach(sectionItem => {
-                const section = {
-                    name: sectionItem.querySelector('.section-name').value,
-                    description: sectionItem.querySelector('.section-description').value,
-                    service_id: sectionItem.querySelector('.section-service-id').value,
-                    media: []
-                };
-                
-                // Collect media files for this section
-                if (sectionItem.fileUploadManager) {
-                    const files = sectionItem.fileUploadManager.getFiles();
-                    files.forEach(file => {
-                        section.media.push({
-                            name: file.name,
-                            type: file.type,
-                            size: file.size
-                        });
-                    });
-                }
-                
-                sections.push(section);
-            });
-            
             // Prepare final data object
             const formData = {
                 vendor: vendorData,
                 services: services,
-                slides: slides,
-                sections: sections
+                slides: slides
             };
             
             // Show loading animation
@@ -1419,16 +1474,13 @@
                 serviceCount = 0;
                 slideCount = 0;
                 sectionCount = 0;
-                servicesList = [];
                 quillEditors = [];
                 
                 updateCounter('servicesCount', serviceCount);
                 updateCounter('slidesCount', slideCount);
-                updateCounter('sectionsCount', sectionCount);
                 
                 servicesContainer.innerHTML = '';
                 slidesContainer.innerHTML = '';
-                sectionsContainer.innerHTML = '';
                 
                 // Reset color previews
                 document.getElementById('color1Preview').style.backgroundColor = '#4361ee';
@@ -1442,6 +1494,10 @@
                 // Reset text editors
                 document.getElementById('vendorDescription').value = '';
                 document.getElementById('vendorAboutUs').value = '';
+                
+                // Add initial sections
+                addService();
+                addSlide();
                 
             }, 2000); // 2 second delay to simulate API call
         });
