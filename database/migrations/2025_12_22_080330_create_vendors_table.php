@@ -20,6 +20,8 @@ return new class extends Migration {
             $table->string('phone2')->nullable();
             $table->string('email')->nullable();
             $table->string('address')->nullable();
+            $table->string('aboute')->nullable();
+            $table->string('aboute_image')->nullable();
             $table->string('location')->nullable();
             $table->string('color1')->nullable();
             $table->string('color2')->nullable();
