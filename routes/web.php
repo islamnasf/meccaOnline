@@ -4,6 +4,7 @@ use App\Http\Controllers\HotelController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VendorController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -50,6 +51,11 @@ Route::middleware('auth')->group(function () {
         Route::post('/item-types/delete', [HotelController::class, 'destroyItemType'])->name('item_types.delete');
     });
 
+
+     Route::prefix('dashboard/vendor')->group(function () {
+        Route::get('/add', [VendorController::class, 'addNewVendor'])->name('addNewVendor');
+
+    });
 })->middleware(['auth', 'verified']);
 
 require __DIR__ . '/auth.php';
