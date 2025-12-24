@@ -22,7 +22,9 @@ return new class extends Migration {
             $table->string('address')->nullable();
             $table->string('aboute')->nullable();
             $table->string('aboute_image')->nullable();
-            $table->string('location')->nullable();
+            $table->string('Latitude')->nullable();
+            $table->string('Longitude')->nullable();
+                        $table->string('is_active')->nullable();
             $table->string('color1')->nullable();
             $table->string('color2')->nullable();
             $table->string('color3')->nullable();

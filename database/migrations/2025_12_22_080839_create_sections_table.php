@@ -17,8 +17,8 @@ return new class extends Migration {
             $table->longText('description')->nullable();
              $table->unsignedBigInteger('service_id');
             $table->foreign('service_id')
-                ->references('id')->on('services')
-                ->onDelete('cascade'); // هذا سيحذف كل التفاصيل تلقائيًا عند حذف النوع
+                ->references('id')->on('vendor_services')
+                ->onDelete('cascade');
 
             $table->timestamps();
         });

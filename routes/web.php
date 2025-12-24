@@ -1,10 +1,14 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VendorController;
+use App\Models\Category;
+use App\Models\Vendor;
+use App\Models\VendorService;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -16,7 +20,19 @@ Route::get('/nabinaMohamed', function () {
 
 
 Route::get('/dashboard', function () {
-    return view('dashboard/index');
+    $totalVendors = Vendor::count();
+    $activeVendors = Vendor::where('is_active', true)->count();
+    $totalServices = VendorService::count();
+    $totalCategories = Category::count();
+    $recentVendors = Vendor::with('category')->latest()->take(10)->get();
+
+    return view('dashboard/index', compact(
+        'totalVendors',
+        'activeVendors',
+        'totalServices',
+        'totalCategories',
+        'recentVendors'
+    ));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -52,10 +68,37 @@ Route::middleware('auth')->group(function () {
     });
 
 
-     Route::prefix('dashboard/vendor')->group(function () {
+    Route::prefix('dashboard/vendor')->group(function () {
         Route::get('/add', [VendorController::class, 'addNewVendor'])->name('addNewVendor');
 
     });
+
+
+    // Vendors Routes
+    Route::prefix('dashboard/vendors')->name('vendors.')->group(function () {
+        Route::get('/', [VendorController::class, 'index'])->name('index');
+        Route::get('/create', [VendorController::class, 'create'])->name('create');
+        Route::post('/store', [VendorController::class, 'store'])->name('store');
+        Route::get('/{id}', [VendorController::class, 'show'])->name('show');
+        Route::get('/{id}/edit', [VendorController::class, 'edit'])->name('edit');
+        Route::post('/{id}', [VendorController::class, 'update'])->name('update');
+        Route::delete('/{id}', [VendorController::class, 'destroy'])->name('destroy');
+        Route::post('/{id}/toggle-status', [VendorController::class, 'toggleStatus'])->name('toggle-status');
+        Route::post('/{id}/upload-media', [VendorController::class, 'uploadMedia'])->name('upload-media');
+        Route::delete('/media/{id}', [VendorController::class, 'deleteMedia'])->name('delete-media');
+    });
+
+    // Categories Routes
+    Route::prefix('categories')->name('categories.')->group(function () {
+        Route::get('/', [CategoryController::class, 'index'])->name('index');
+        Route::post('/store', [CategoryController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [CategoryController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [CategoryController::class, 'update'])->name('update');
+        Route::delete('/{id}', [CategoryController::class, 'destroy'])->name('destroy');
+    });
+
+
+
 })->middleware(['auth', 'verified']);
 
 require __DIR__ . '/auth.php';
