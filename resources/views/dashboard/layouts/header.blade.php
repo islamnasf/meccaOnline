@@ -538,10 +538,36 @@
                             data-bs-toggle="dropdown"> -->
                         @auth
 @if(in_array(auth()->user()->role, ["0", "1"]))
-         <a class="nav-link {{ request()->routeIs('hotels.index') ? 'active' : '' }}" 
-           href="{{ route('hotels.index') }}">
+         <a class="nav-link {{ request()->routeIs('categories.index') ? 'active' : '' }}" 
+           href="{{ route('categories.index') }}">
             <i class="bi bi-file-text me-1"></i>
-            الفنادق
+            الاقسام
+        </a>
+    @endif
+@endauth
+                        <!-- <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="reportsDropdown">
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-graph-up me-2"></i>تقارير المبيعات</a>
+                            </li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-people me-2"></i>تقارير المستخدمين</a>
+                            </li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-bar-chart me-2"></i>تقارير الأداء</a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-download me-2"></i>تصدير جميع
+                                    التقارير</a></li>
+                        </ul> -->
+                    </li>
+                            <li class="nav-item ">
+                        <!-- <a class="nav-link dropdown-toggle" href="{{ route('hotels.index') }}" id="reportsDropdown" role="button"
+                            data-bs-toggle="dropdown"> -->
+                        @auth
+@if(in_array(auth()->user()->role, ["0", "1"]))
+         <a class="nav-link {{ request()->routeIs('vendors.index') ? 'active' : '' }}" 
+           href="{{ route('vendors.index') }}">
+            <i class="bi bi-flag me-1"></i>
+            المشاريع
         </a>
     @endif
 @endauth

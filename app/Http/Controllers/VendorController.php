@@ -22,7 +22,7 @@ class VendorController extends Controller
     {
         $categories = Category::all();
         $vendors = Vendor::with(['services', 'slides'])->get();
-        return view('vendors.index', compact('categories', 'vendors'));
+        return view('dashboard.vendors', compact('categories', 'vendors'));
     }
     
     /**
@@ -456,29 +456,48 @@ class VendorController extends Controller
     /**
      * حذف بائع
      */
-    public function destroy($id)
-    {
-        DB::beginTransaction();
+    // public function destroy($id)
+    // {
+    //     DB::beginTransaction();
         
-        try {
-            $vendor = Vendor::findOrFail($id);
+    //     try {
+    //         $vendor = Vendor::findOrFail($id);
             
-            // حذف جميع الملفات المرتبطة
-            $this->deleteVendorFiles($vendor);
+    //         // حذف جميع الملفات المرتبطة
+    //         $this->deleteVendorFiles($vendor);
             
-            $vendor->delete();
+    //         $vendor->delete();
             
-            DB::commit();
+    //         DB::commit();
             
-            return redirect()->route('vendors.index')->with('success', 'تم حذف البائع بنجاح');
+    //         return redirect()->route('vendors.index')->with('success', 'تم حذف البائع بنجاح');
             
-        } catch (\Exception $e) {
-            DB::rollBack();
-            \Log::error('Error deleting vendor: ' . $e->getMessage());
-            return redirect()->back()->with('error', 'حدث خطأ أثناء الحذف: ' . $e->getMessage());
-        }
-    }
+    //     } catch (\Exception $e) {
+    //         DB::rollBack();
+    //         \Log::error('Error deleting vendor: ' . $e->getMessage());
+    //         return redirect()->back()->with('error', 'حدث خطأ أثناء الحذف: ' . $e->getMessage());
+    //     }
+    // }
+public function destroy(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:vendors,id'
+        ]);
 
+        $vendor = Vendor::findOrFail($request->id);
+
+        // حذف جميع الصور المرتبطة
+        $imageFields = ['image', 'logo', 'aboute_image'];
+        foreach ($imageFields as $field) {
+            if ($vendor->$field && Storage::disk('public')->exists($vendor->$field)) {
+                Storage::disk('public')->delete($vendor->$field);
+            }
+        }
+
+        $vendor->delete();
+
+        return redirect()->back()->with('success', 'تم حذف البائع بنجاح');
+    }
     /**
      * حذف ملفات البائع
      */

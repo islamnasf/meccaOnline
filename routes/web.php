@@ -86,15 +86,17 @@ Route::middleware('auth')->group(function () {
         Route::post('/{id}/toggle-status', [VendorController::class, 'toggleStatus'])->name('toggle-status');
         Route::post('/{id}/upload-media', [VendorController::class, 'uploadMedia'])->name('upload-media');
         Route::delete('/media/{id}', [VendorController::class, 'deleteMedia'])->name('delete-media');
+            Route::post('/vendors/delete', [VendorController::class, 'destroy'])->name('delete');
+
     });
 
     // Categories Routes
-    Route::prefix('categories')->name('categories.')->group(function () {
-        Route::get('/', [CategoryController::class, 'index'])->name('index');
-        Route::post('/store', [CategoryController::class, 'store'])->name('store');
-        Route::get('/{id}/edit', [CategoryController::class, 'edit'])->name('edit');
-        Route::put('/{id}', [CategoryController::class, 'update'])->name('update');
-        Route::delete('/{id}', [CategoryController::class, 'destroy'])->name('destroy');
+    Route::prefix('categories')->group(function () {
+        Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+        Route::post('/categories/store', [CategoryController::class, 'store'])->name('categories.store');
+        Route::put('/categories/update', [CategoryController::class, 'update'])->name('categories.update');
+        Route::post('/categories/delete', [CategoryController::class, 'destroy'])->name('categories.delete');
+    Route::post('/categories/delete-image', [CategoryController::class, 'deleteImage'])->name('categories.deleteImage');
     });
 
 
