@@ -34,8 +34,8 @@
                             <tr>
                                 <td class="fw-bold text-center">{{ $vendor->id }}</td>
                                 <td class="text-center">
-                                    @if($vendor->image_url)
-                                        <img src="{{ $vendor->image_url }}" 
+                                    @if($vendor->image)
+                                        <img src="{{ asset('storage/' . $vendor->image) }}" 
                                              alt="{{ $vendor->name }}" 
                                              class="vendor-image rounded"
                                              style="width: 50px; height: 50px; object-fit: cover;"
@@ -94,13 +94,13 @@
                                 <td class="text-center">{{ $vendor->created_at->format('Y-m-d') }}</td>
                                 <td class="text-center">
                                     <div class="btn-group" role="group">
-                                        <button class="btn btn-sm btn-outline-info btn-action me-1" 
+                                        <!-- <button class="btn btn-sm btn-outline-info btn-action me-1" 
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#viewModal" 
                                                 onclick="viewVendor({{ json_encode($vendor) }})" 
                                                 title="عرض التفاصيل">
                                             <i class="bi bi-eye"></i>
-                                        </button>
+                                        </button> -->
                                         @auth
                                         @if(auth()->user()->role === "0")
                                         <a class="btn btn-sm btn-outline-warning btn-action me-1" 
